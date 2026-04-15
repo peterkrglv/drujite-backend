@@ -20,9 +20,9 @@ class GoalService(
         val goalModel =
             GoalModel(
                 id = 0,
-                usersSessionId = usersSessionId,
+                isCompleted = goalRequest.isCompleted,
                 name = goalRequest.name,
-                isCompleted = false,
+                usersSessionId = usersSessionId,
             )
         return goalRepository.add(goalModel)
     }

@@ -124,16 +124,16 @@ fun Route.goalRoute(
 
 private fun GoalModel.toResponse() =
     GoalResponse(
-        id = this.id,
         characterId = this.usersSessionId,
-        name = this.name,
+        id = this.id,
         isCompleted = this.isCompleted,
+        name = this.name,
     )
 
 private fun GoalModelWithCharacterdId.toResponse() =
     GoalModelWithCharacterIdResponse(
-        id = this.id,
-        name = this.name,
-        isCompleted = this.isCompleted,
         characterId = this.characterId,
+        id = this.id,
+        isCompleted = this.isCompleted,
+        name = this.name,
     )

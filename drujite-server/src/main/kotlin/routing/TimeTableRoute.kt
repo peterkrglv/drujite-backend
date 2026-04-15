@@ -76,14 +76,14 @@ fun Route.timeTableRoute(timeTableService: TimeTableService) {
 
 private fun TimeTableModel.toResponse() =
     TimeTableResponse(
+        date = this.date,
         id = this.id,
         sessionId = this.sessionId,
-        date = this.date,
     )
 
 private fun AddTimeTableRequest.toModel() =
     TimeTableModel(
+        date = date,
         id = 0,
         sessionId = sessionId,
-        date = date,
     )

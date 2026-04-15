@@ -3,10 +3,10 @@ package models
 import java.util.UUID
 
 data class UserModel(
-    val id: UUID,
-    val username: String,
-    val phone: String,
-    val password: String,
     val gender: String,
+    val id: UUID,
+    val password: String,
+    val phone: String,
+    val username: String,
     val isAdmin: Boolean = false,
 )

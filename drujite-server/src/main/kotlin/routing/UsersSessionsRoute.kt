@@ -64,10 +64,11 @@ fun Route.usersSessionsRoute(
 
 private fun SessionModel.toResponse(): SessionResponse =
     SessionResponse(
+        description = this.description,
+        endDate = this.endDate,
         id = this.id,
         name = this.name,
-        description = this.description,
         startDate = this.startDate,
-        endDate = this.endDate,
         imageUrl = this.imageUrl,
+        qrLink = this.qrLink,
     )

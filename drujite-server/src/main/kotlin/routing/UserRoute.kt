@@ -38,15 +38,15 @@ fun Route.userRoute(
 
 fun SignupRequest.toModel(): UserModel =
     UserModel(
-        id = UUID.randomUUID(),
-        username = this.username,
-        phone = this.phone,
-        password = this.password,
         gender = this.gender,
+        id = UUID.randomUUID(),
+        password = this.password,
+        phone = this.phone,
+        username = this.username,
     )
 
 private fun UserModel.toResponse(): UserResponse =
     UserResponse(
-        username = this.username,
         phone = this.phone,
+        username = this.username,
     )

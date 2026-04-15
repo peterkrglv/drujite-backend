@@ -10,10 +10,10 @@ class CharacterRepositoryImpl : CharacterRepository {
         suspendTransaction {
             CharacterDAO
                 .new {
-                    name = character.name
-                    story = character.story
                     clanId = character.clanId
                     imageUrl = character.imageUrl
+                    name = character.name
+                    story = character.story
                 }.id.value
         }
 
@@ -21,10 +21,10 @@ class CharacterRepositoryImpl : CharacterRepository {
         suspendTransaction {
             CharacterDAO.findById(id)?.let {
                 CharacterModel(
+                    clanId = it.clanId,
                     id = it.id.value,
                     name = it.name,
                     story = it.story,
-                    clanId = it.clanId,
                     imageUrl = it.imageUrl,
                 )
             }

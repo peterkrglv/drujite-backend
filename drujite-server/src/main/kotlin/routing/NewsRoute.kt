@@ -76,20 +76,20 @@ fun Route.newsRoute(newsService: NewsService) {
 
 private fun NewsModel.toResponse() =
     NewsResponse(
-        id = id,
-        sessionId = sessionId,
-        title = title,
         content = content,
         dateTime = dateTime,
+        id = id,
         imageUrl = imageUrl,
+        sessionId = sessionId,
+        title = title,
     )
 
 private fun AddNewsRequest.toModel() =
     NewsModel(
-        id = 0,
-        sessionId = sessionId,
-        title = title,
         content = content,
         dateTime = "",
+        id = 0,
         imageUrl = imageUrl,
+        sessionId = sessionId,
+        title = title,
     )

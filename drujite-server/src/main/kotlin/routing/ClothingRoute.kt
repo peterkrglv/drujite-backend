@@ -52,9 +52,9 @@ fun Route.clothingRoute(clothingService: ClothingService) {
 
 private fun ClothingItemRequest.toModel() =
     ClothingItem(
+        iconUrl = iconUrl,
         id = 0,
+        imageUrl = imageUrl,
         name = name,
         typeId = typeId,
-        imageUrl = imageUrl,
-        iconUrl = iconUrl,
     )

@@ -26,9 +26,9 @@ class CharacterDAO(
 
 fun daoToModel(dao: CharacterDAO) =
     CharacterModel(
+        clanId = dao.clanId,
         id = dao.id.value,
         name = dao.name,
         story = dao.story,
-        clanId = dao.clanId,
         imageUrl = dao.imageUrl,
     )

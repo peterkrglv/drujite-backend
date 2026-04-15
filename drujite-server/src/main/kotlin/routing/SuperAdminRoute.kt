@@ -87,7 +87,7 @@ fun Route.superAdminRoute(
 
 private fun UserModel.toResponse(): UserAdminResponse =
     UserAdminResponse(
+        isAdmin = isAdmin,
         phone = phone,
         username = username,
-        isAdmin = isAdmin,
     )

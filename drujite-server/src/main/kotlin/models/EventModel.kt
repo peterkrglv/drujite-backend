@@ -2,8 +2,8 @@ package models
 
 data class EventModel(
     val id: Int,
-    val timetableId: Int,
+    val isTitle: Boolean,
     val name: String,
     val time: String,
-    val isTitle: Boolean,
+    val timetableId: Int,
 )

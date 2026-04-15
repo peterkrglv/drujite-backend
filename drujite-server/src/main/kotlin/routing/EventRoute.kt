@@ -99,17 +99,17 @@ fun Route.eventRoute(timeTableService: TimeTableService) {
 private fun EventModel.toResponse() =
     EventResponse(
         id = this.id,
-        timetableId = this.timetableId,
+        isTitle = this.isTitle,
         name = this.name,
         time = this.time,
-        isTitle = this.isTitle,
+        timetableId = this.timetableId,
     )
 
 private fun AddEventRequest.toModel() =
     EventModel(
         id = 0,
-        timetableId = this.timetableId,
+        isTitle = this.isTitle,
         name = this.name,
         time = this.time,
-        isTitle = this.isTitle,
+        timetableId = this.timetableId,
     )
