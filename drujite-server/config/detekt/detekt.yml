@@ -1,6 +1,3 @@
-# Project uses a flat `kotlin/<folder>/` layout with `ru.drujite` / `routing` / `services` packages
-# (not `kotlin/ru/drujite/...`), so defaults that assume directory == package are relaxed.
-
 complexity:
   LongMethod:
     active: true
