@@ -8,5 +8,5 @@ data class SessionRequest(
     val description: String,
     val startDate: String,
     val endDate: String,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
 )

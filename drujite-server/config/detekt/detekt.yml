@@ -1,0 +1,25 @@
+# Project uses a flat `kotlin/<folder>/` layout with `ru.drujite` / `routing` / `services` packages
+# (not `kotlin/ru/drujite/...`), so defaults that assume directory == package are relaxed.
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 85
+  LongParameterList:
+    active: true
+    functionThreshold: 12
+    constructorThreshold: 12
+  TooManyFunctions:
+    active: true
+    thresholdInInterfaces: 15
+    thresholdInClasses: 15
+    thresholdInObjects: 15
+
+naming:
+  InvalidPackageDeclaration:
+    active: false
+
+style:
+  MaxLineLength:
+    active: true
+    maxLineLength: 140

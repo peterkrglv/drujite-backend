@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class SessionsResponse(
-    val sessions: List<SessionResponse>
+    val sessions: List<SessionResponse>,
 )

@@ -7,8 +7,12 @@ import models.TimeTableModel
 
 class TimeTableService(
     private val timeTableRepository: TimeTableRepository,
-    private val eventRepository: EventRepository
+    private val eventRepository: EventRepository,
 ) {
+    private companion object {
+        private const val MINUTES_PER_HOUR = 60
+    }
+
     suspend fun getTimeTable(timeTableId: Int) = timeTableRepository.getBySessionAndDate(timeTableId)
 
     suspend fun addTimeTable(timeTable: TimeTableModel) = timeTableRepository.add(timeTable)
@@ -17,33 +21,32 @@ class TimeTableService(
 
     suspend fun getSessionsTimetables(sessionId: Int) = timeTableRepository.getSessionsTimetables(sessionId)
 
-    suspend fun addEvent(event: EventModel): Int? {
-        return eventRepository.add(event)
-    }
+    suspend fun addEvent(event: EventModel): Int? = eventRepository.add(event)
 
-    suspend fun deleteEvent(eventId: Int): Boolean {
-        return eventRepository.delete(eventId)
-    }
+    suspend fun deleteEvent(eventId: Int): Boolean = eventRepository.delete(eventId)
 
-    suspend fun getEvent(eventId: Int): EventModel? {
-        return eventRepository.get(eventId)
-    }
+    suspend fun getEvent(eventId: Int): EventModel? = eventRepository.get(eventId)
 
-    suspend fun getEventsBySessionAndDate(sessionId: Int, date: String): List<EventModel> {
+    suspend fun getEventsBySessionAndDate(
+        sessionId: Int,
+        date: String,
+    ): List<EventModel> {
         val timeTable = timeTableRepository.getBySessionAndDate(sessionId, date) ?: return emptyList()
         val eventIds = eventRepository.getTimetableEventIds(timeTable.id)
-        return eventIds.mapNotNull { eventRepository.get(it) }
+        return eventIds
+            .mapNotNull { eventRepository.get(it) }
             .sortedBy { it.time }
     }
 
     suspend fun getEventsByTimetableId(timetableId: Int): List<EventModel> {
         val events = eventRepository.getTimetableEventIds(timetableId)
-        return events.mapNotNull { eventRepository.get(it) }
+        return events
+            .mapNotNull { eventRepository.get(it) }
             .sortedBy {
                 val parts = it.time.split(":")
                 val hours = parts[0].toInt()
                 val minutes = parts[1].toInt()
-                hours * 60 + minutes
+                hours * MINUTES_PER_HOUR + minutes
             }
     }
 }

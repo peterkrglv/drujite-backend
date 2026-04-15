@@ -3,8 +3,8 @@ package responses
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ClanResponse (
+data class ClanResponse(
     val id: Int,
     val name: String,
-    val description: String? = null
+    val description: String? = null,
 )

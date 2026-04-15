@@ -5,7 +5,7 @@ import db.repos.UsersSessionsRepository
 import models.GoalModel
 import requests.AddGoalRequest
 import ru.drujite.models.GoalModelWithCharacterdId
-import java.util.*
+import java.util.UUID
 
 class GoalService(
     private val goalRepository: GoalRepository,
@@ -17,28 +17,29 @@ class GoalService(
         val usersSessionId =
             usersSessionsRepository.getIdByCharacterAndSession(goalRequest.characterId, goalRequest.sessionId)
                 ?: return null
-        val goalModel = GoalModel(
-            id = 0,
-            usersSessionId = usersSessionId,
-            name = goalRequest.name,
-            isCompleted = false,
-        )
+        val goalModel =
+            GoalModel(
+                id = 0,
+                usersSessionId = usersSessionId,
+                name = goalRequest.name,
+                isCompleted = false,
+            )
         return goalRepository.add(goalModel)
     }
 
     suspend fun deleteGoal(id: Int) = goalRepository.delete(id)
 
-    suspend fun getCharacterGoals(userId: String, sessionId: Int): List<GoalModel> {
+    suspend fun getCharacterGoals(
+        userId: String,
+        sessionId: Int,
+    ): List<GoalModel> {
         val usersSessionId =
             usersSessionsRepository.getIdByUserAndSession(UUID.fromString(userId), sessionId)
                 ?: return emptyList()
         return goalRepository.getCharacterGoals(usersSessionId)
     }
 
-    suspend fun updateGoalStatus(id: Int) =
-        goalRepository.changeStatus(id)
+    suspend fun updateGoalStatus(id: Int) = goalRepository.changeStatus(id)
 
-    suspend fun getSessionsGoals(sessionId: Int): List<GoalModelWithCharacterdId> {
-        return goalRepository.getSessionsGoals(sessionId)
-    }
+    suspend fun getSessionsGoals(sessionId: Int): List<GoalModelWithCharacterdId> = goalRepository.getSessionsGoals(sessionId)
 }

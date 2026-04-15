@@ -3,7 +3,7 @@ package responses
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NewsResponse (
+data class NewsResponse(
     val id: Int,
     val sessionId: Int,
     val title: String,

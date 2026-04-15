@@ -3,7 +3,7 @@ package requests
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AddClanRequest (
+data class AddClanRequest(
     val name: String,
-    val description: String? = null
+    val description: String? = null,
 )

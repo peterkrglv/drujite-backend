@@ -1,52 +1,49 @@
 package routing
 
-import ru.drujite.requests.SignupRequest
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
 import models.UserModel
+import ru.drujite.requests.SignupRequest
 import ru.drujite.responces.UserResponse
 import services.JwtService
 import services.UserService
-import java.util.*
+import java.util.UUID
 
-fun Route.userRoute(userService: UserService, jwtService: JwtService) {
+fun Route.userRoute(
+    userService: UserService,
+    jwtService: JwtService,
+) {
     authenticate {
         get("/me") {
             val principal = call.principal<JWTPrincipal>()
             val userId =
                 principal?.let { jwtService.extractId(it) } ?: return@get call.respond(HttpStatusCode.Unauthorized)
-            val foundUser = userService.findById(userId)
-                ?: return@get call.respond(HttpStatusCode.BadRequest)
+            val foundUser =
+                userService.findById(userId)
+                    ?: return@get call.respond(HttpStatusCode.BadRequest)
             call.respond(
-                message = foundUser.toResponse()
+                message = foundUser.toResponse(),
             )
         }
     }
 }
 
-fun SignupRequest.toModel(): UserModel {
-    return UserModel(
+fun SignupRequest.toModel(): UserModel =
+    UserModel(
         id = UUID.randomUUID(),
         username = this.username,
         phone = this.phone,
         password = this.password,
-        gender = this.gender
+        gender = this.gender,
     )
-}
 
-private fun UserModel.toResponse(): UserResponse {
-    return UserResponse(
+private fun UserModel.toResponse(): UserResponse =
+    UserResponse(
         username = this.username,
-        phone = this.phone
+        phone = this.phone,
     )
-}
-
-private fun extractPrincipalUsername(call: ApplicationCall): String? =
-    call.principal<JWTPrincipal>()
-        ?.payload
-        ?.getClaim("username")
-        ?.asString()

@@ -1,50 +1,22 @@
-version: "3.8"
 services:
-  api:
-    build:
-      context: ./drujite-server
-      dockerfile: Dockerfile
+  postgres:
+    image: postgres:16-alpine
+    container_name: drujite-postgres
+    restart: unless-stopped
     ports:
-      - "8080:8080"
-    container_name: drujite-container
-    env_file:
-      - .env
+      - "${POSTGRES_PORT:-5432}:5432"
     environment:
-      JWT_SECRET: ${JWT_SECRET}
+      POSTGRES_USER: ${POSTGRES_USER:-drujite}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-drujite}
+      POSTGRES_DB: ${POSTGRES_DB:-drujite}
     volumes:
-      - images_sessions:/app/storage/images/sessions
-      - images_characters:/app/storage/images/characters
-      - images_news:/app/storage/images/news
-      - images_clothing:/app/storage/images/clothing
-      - images_clothingIcons:/app/storage/images/clothingIcons
-
-  pg:
-    image: postgres:latest
-    container_name: drujite-pg-container
-    env_file:
-      - .env
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB_NAME}
-    ports:
-      - "25432:5432"
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-    command: [ "postgres", "-c", "log_statement=all" ]
-    restart: on-failure
+      - drujite_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U admin -d drujite_pg" ]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 3s
       timeout: 5s
-      retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 2G
+      retries: 20
+      start_period: 5s
 
 volumes:
-  pg_data:
-  images_sessions:
-  images_characters:
-  images_news:
-  images_clothing:
-  images_clothingIcons:
+  drujite_pgdata:

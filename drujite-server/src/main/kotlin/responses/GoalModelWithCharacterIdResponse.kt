@@ -7,5 +7,5 @@ data class GoalModelWithCharacterIdResponse(
     val id: Int,
     val characterId: Int,
     val name: String,
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
 )

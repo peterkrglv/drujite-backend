@@ -6,14 +6,15 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
-object GoalTable: IntIdTable("goals") {
-    // users_session_id INT REFERENCES users_sessions(id) ON DELETE CASCADE,
+object GoalTable : IntIdTable("goals") {
     val usersSessionId = integer("users_session_id").references(UsersSessionsTable.id)
-    val name = varchar("name", 255)
+    val name = varchar("name", DbStringLength.STANDARD)
     val isCompleted = bool("is_completed").default(false)
 }
 
-class GoalDAO(id: EntityID<Int>) : IntEntity(id) {
+class GoalDAO(
+    id: EntityID<Int>,
+) : IntEntity(id) {
     companion object : IntEntityClass<GoalDAO>(GoalTable)
 
     var usersSessionId by GoalTable.usersSessionId
@@ -21,9 +22,10 @@ class GoalDAO(id: EntityID<Int>) : IntEntity(id) {
     var isCompleted by GoalTable.isCompleted
 }
 
-fun daoToModel(dao: GoalDAO) = GoalModel(
-    id = dao.id.value,
-    usersSessionId = dao.usersSessionId,
-    name = dao.name,
-    isCompleted = dao.isCompleted
-)
+fun daoToModel(dao: GoalDAO) =
+    GoalModel(
+        id = dao.id.value,
+        usersSessionId = dao.usersSessionId,
+        name = dao.name,
+        isCompleted = dao.isCompleted,
+    )

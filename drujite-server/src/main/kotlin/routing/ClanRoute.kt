@@ -1,10 +1,13 @@
 package routing
 
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import models.ClanModel
 import requests.AddClanRequest
 import requests.ClanToSessionRequest
@@ -12,14 +15,13 @@ import responses.ClanResponse
 import responses.IdResponse
 import services.ClanService
 
-fun Route.clanRoute(
-    clanService: ClanService
-) {
+fun Route.clanRoute(clanService: ClanService) {
     authenticate {
-        get() {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
-                HttpStatusCode.BadRequest
-            )
+        get {
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val clan = clanService.getClan(id)
             if (clan == null) {
                 call.respond(HttpStatusCode.NotFound)
@@ -28,17 +30,18 @@ fun Route.clanRoute(
             }
         }
 
-        post() {
+        post {
             val request = call.receive<AddClanRequest>()
             val clan = request.toModel()
             val clanId = clanService.addClan(clan)
             call.respond(HttpStatusCode.Created, IdResponse(clanId))
         }
 
-        delete() {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
-                HttpStatusCode.BadRequest
-            )
+        delete {
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val result = clanService.deleteClan(id)
             if (result) {
                 call.respond(HttpStatusCode.OK)
@@ -68,9 +71,10 @@ fun Route.clanRoute(
         }
 
         get("/session-all") {
-            val id = call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(
-                HttpStatusCode.BadRequest
-            )
+            val id =
+                call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val clans = clanService.getSessionsClans(id)
             call.respond(HttpStatusCode.OK, clans.map { it.toResponse() })
         }
@@ -86,12 +90,12 @@ private fun AddClanRequest.toModel() =
     ClanModel(
         id = 0,
         name = this.name,
-        description = this.description
+        description = this.description,
     )
 
 private fun ClanModel.toResponse() =
     ClanResponse(
         id = this.id,
         name = this.name,
-        description = this.description
+        description = this.description,
     )

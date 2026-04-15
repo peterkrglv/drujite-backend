@@ -1,6 +1,6 @@
 package models
 
-data class NewsModel (
+data class NewsModel(
     val id: Int,
     val sessionId: Int,
     val title: String,

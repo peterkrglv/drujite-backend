@@ -7,5 +7,5 @@ data class AddCharacterRequest(
     val name: String,
     val story: String,
     val clanId: Int,
-    val image: String? = null
+    val image: String? = null,
 )

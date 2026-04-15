@@ -1,0 +1,5 @@
+# Ktlint: project uses default rules for [*.{kt,kts}] (no disabled standard rules).
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = ktlint_official

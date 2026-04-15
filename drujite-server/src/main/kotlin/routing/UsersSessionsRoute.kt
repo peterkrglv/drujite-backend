@@ -1,11 +1,14 @@
 package routing
 
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import models.SessionModel
 import requests.IdRequest
 import responses.SessionResponse
@@ -41,21 +44,21 @@ fun Route.usersSessionsRoute(
             val userId =
                 principal?.let { jwtService.extractId(it) } ?: return@post call.respond(HttpStatusCode.Unauthorized)
             val session = usersSessionsService.addUsersSessionByQr(userId, request.qr)
-                if (session != null) {
-                    call.respond(HttpStatusCode.Created, session.toResponse())
-                } else {
-                    call.respond(HttpStatusCode.NotFound)
-                }
+            if (session != null) {
+                call.respond(HttpStatusCode.Created, session.toResponse())
+            } else {
+                call.respond(HttpStatusCode.NotFound)
+            }
         }
     }
 }
 
-private fun SessionModel.toResponse(): SessionResponse = SessionResponse(
-    id = this.id,
-    name = this.name,
-    description = this.description,
-    startDate = this.startDate,
-    endDate = this.endDate,
-    imageUrl = this.imageUrl
-)
-
+private fun SessionModel.toResponse(): SessionResponse =
+    SessionResponse(
+        id = this.id,
+        name = this.name,
+        description = this.description,
+        startDate = this.startDate,
+        endDate = this.endDate,
+        imageUrl = this.imageUrl,
+    )

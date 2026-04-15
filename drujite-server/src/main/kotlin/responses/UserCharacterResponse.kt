@@ -9,5 +9,5 @@ data class UserCharacterResponse(
     val player: String,
     val story: String,
     val clan: String,
-    val imageUrl: String?
+    val imageUrl: String?,
 )

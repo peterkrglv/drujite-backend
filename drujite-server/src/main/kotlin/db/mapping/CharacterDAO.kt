@@ -7,13 +7,15 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object CharacterTable : IntIdTable("characters") {
-    val name = varchar("name", 255)
+    val name = varchar("name", DbStringLength.STANDARD)
     val story = text("story")
     val clanId = integer("clan_id").references(ClanTable.id)
-    val image_url = varchar("image_url", 255).nullable()
+    val image_url = varchar("image_url", DbStringLength.STANDARD).nullable()
 }
 
-class CharacterDAO(id: EntityID<Int>) : IntEntity(id) {
+class CharacterDAO(
+    id: EntityID<Int>,
+) : IntEntity(id) {
     companion object : IntEntityClass<CharacterDAO>(CharacterTable)
 
     var name by CharacterTable.name
@@ -22,10 +24,11 @@ class CharacterDAO(id: EntityID<Int>) : IntEntity(id) {
     var imageUrl by CharacterTable.image_url
 }
 
-fun daoToModel(dao: CharacterDAO) = CharacterModel(
-    id = dao.id.value,
-    name = dao.name,
-    story = dao.story,
-    clanId = dao.clanId,
-    imageUrl = dao.imageUrl
-)
+fun daoToModel(dao: CharacterDAO) =
+    CharacterModel(
+        id = dao.id.value,
+        name = dao.name,
+        story = dao.story,
+        clanId = dao.clanId,
+        imageUrl = dao.imageUrl,
+    )

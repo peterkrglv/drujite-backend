@@ -1,23 +1,24 @@
 package ru.drujite.db.mapping
 
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import ru.drujite.requests.AddCharactersClothingRequest
 import ru.drujite.services.ClothingService
 
-fun Route.charactersClothingRoute(
-    clothingService: ClothingService,
-) {
+fun Route.charactersClothingRoute(clothingService: ClothingService) {
     authenticate {
         post {
             val request = call.receive<AddCharactersClothingRequest>()
-            val result = clothingService.addClothingItemsToCharacter(
-                characterId = request.characterId,
-                itemsIds = request.itemsIds
-            )
+            val result =
+                clothingService.addClothingItemsToCharacter(
+                    characterId = request.characterId,
+                    itemsIds = request.itemsIds,
+                )
             if (result) {
                 call.respond(HttpStatusCode.OK)
             } else {

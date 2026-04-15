@@ -1,20 +1,20 @@
 package routing
 
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import models.TimeTableModel
 import requests.AddTimeTableRequest
-import requests.IdRequest
 import responses.IdResponse
 import responses.TimeTableResponse
 import services.TimeTableService
 
-fun Route.timeTableRoute(
-    timeTableService: TimeTableService
-) {
+fun Route.timeTableRoute(timeTableService: TimeTableService) {
     authenticate {
         post {
             val request = call.receive<AddTimeTableRequest>()
@@ -23,9 +23,10 @@ fun Route.timeTableRoute(
         }
 
         delete {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
-                HttpStatusCode.BadRequest
-            )
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val result = timeTableService.deleteTimeTable(id)
             if (result) {
                 call.respond(HttpStatusCode.OK)
@@ -35,9 +36,10 @@ fun Route.timeTableRoute(
         }
 
         get {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
-                HttpStatusCode.BadRequest
-            )
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val timeTable = timeTableService.getTimeTable(id)
             if (timeTable != null) {
                 call.respond(HttpStatusCode.OK, timeTable.toResponse())
@@ -47,13 +49,14 @@ fun Route.timeTableRoute(
         }
 
         get("/session-all") {
-            val sessionId = call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(
-                HttpStatusCode.BadRequest
-            )
+            val sessionId =
+                call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val timeTables = timeTableService.getSessionsTimetables(sessionId)
             call.respond(
                 HttpStatusCode.OK,
-                timeTables.map { it.toResponse() }
+                timeTables.map { it.toResponse() },
             )
         }
     }

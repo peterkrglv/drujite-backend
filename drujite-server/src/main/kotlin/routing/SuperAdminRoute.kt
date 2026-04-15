@@ -19,7 +19,7 @@ import services.UserService
 
 fun Route.superAdminRoute(
     jwtService: JwtService,
-    userService: UserService
+    userService: UserService,
 ) {
     val logger: Logger = LoggerFactory.getLogger(Route::class.java)
     authenticate {
@@ -41,8 +41,9 @@ fun Route.superAdminRoute(
             val request = call.receive<MakeAdminRequest>()
             logger.info("Received request to make admin for phone: ${request.phone}")
             println("Received request to make admin for phone: ${request.phone}")
-            val user = userService.findByPhone(request.phone)
-                ?: return@post call.respond(HttpStatusCode.NotFound)
+            val user =
+                userService.findByPhone(request.phone)
+                    ?: return@post call.respond(HttpStatusCode.NotFound)
             logger.info("Found user with phone ${request.phone}, ID: ${user.id}")
             println("Found user with phone ${request.phone}, ID: ${user.id}")
             if (userService.makeAdmin(user.id)) {
@@ -78,10 +79,9 @@ fun Route.superAdminRoute(
     }
 }
 
-private fun UserModel.toResponse(): UserAdminResponse {
-    return UserAdminResponse(
+private fun UserModel.toResponse(): UserAdminResponse =
+    UserAdminResponse(
         phone = phone,
         username = username,
         isAdmin = isAdmin,
     )
-}

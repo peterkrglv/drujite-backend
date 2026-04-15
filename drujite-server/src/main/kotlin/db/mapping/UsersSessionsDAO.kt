@@ -12,8 +12,11 @@ object UsersSessionsTable : IntIdTable("users_sessions") {
     val transferReason = text("transfer_reason").nullable()
 }
 
-class UsersSessionsDAO(id: EntityID<Int>) : IntEntity(id) {
+class UsersSessionsDAO(
+    id: EntityID<Int>,
+) : IntEntity(id) {
     companion object : IntEntityClass<UsersSessionsDAO>(UsersSessionsTable)
+
     var userId by UsersSessionsTable.userId
     var sessionId by UsersSessionsTable.sessionId
     var characterId by UsersSessionsTable.characterId
