@@ -31,6 +31,9 @@ fun Route.goalRoute(
     jwtService: JwtService,
 ) {
     authenticate {
+        /**
+         * Tag: Goal
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -44,12 +47,18 @@ fun Route.goalRoute(
             }
         }
 
+        /**
+         * Tag: Goal
+         */
         post {
             val request = call.receive<AddGoalRequest>()
             val goalId = goalService.addGoal(request) ?: return@post call.respond(HttpStatusCode.BadRequest)
             call.respond(HttpStatusCode.Created, IdResponse(goalId))
         }
 
+        /**
+         * Tag: Goal
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -63,6 +72,9 @@ fun Route.goalRoute(
             }
         }
 
+        /**
+         * Tag: Goal
+         */
         get("/character-all") {
             val principal = call.principal<JWTPrincipal>()
             val userId =
@@ -78,6 +90,9 @@ fun Route.goalRoute(
             )
         }
 
+        /**
+         * Tag: Goal
+         */
         put("/complete") {
             val request = call.receive<IdRequest>()
             val result = goalService.updateGoalStatus(request.id)
@@ -88,6 +103,9 @@ fun Route.goalRoute(
             }
         }
 
+        /**
+         * Tag: Goal
+         */
         get("session-all") {
             val sessionId =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(

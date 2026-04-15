@@ -21,6 +21,9 @@ fun Route.usersSessionsRoute(
     usersSessionsService: UsersSessionsService,
 ) {
     authenticate {
+        /**
+         * Tag: UsersSessions
+         */
         get {
             val principal = call.principal<JWTPrincipal>()
             val userId =
@@ -29,6 +32,9 @@ fun Route.usersSessionsRoute(
             call.respond(HttpStatusCode.OK, sessions.map { it.toResponse() })
         }
 
+        /**
+         * Tag: UsersSessions
+         */
         post {
             val sessionRequest = call.receive<IdRequest>()
             val principal = call.principal<JWTPrincipal>()
@@ -38,6 +44,9 @@ fun Route.usersSessionsRoute(
             call.respond(HttpStatusCode.Created)
         }
 
+        /**
+         * Tag: UsersSessions
+         */
         post("qr") {
             val request = call.receive<AddSessionByQRRequest>()
             val principal = call.principal<JWTPrincipal>()

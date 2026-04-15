@@ -16,6 +16,9 @@ import services.NewsService
 
 fun Route.newsRoute(newsService: NewsService) {
     authenticate {
+        /**
+         * Tag: News
+         */
         post {
             val request = call.receive<AddNewsRequest>()
             val news = request.toModel()
@@ -25,6 +28,9 @@ fun Route.newsRoute(newsService: NewsService) {
             call.respond(HttpStatusCode.OK, IdResponse(newsId))
         }
 
+        /**
+         * Tag: News
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -38,6 +44,9 @@ fun Route.newsRoute(newsService: NewsService) {
             }
         }
 
+        /**
+         * Tag: News
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -51,6 +60,9 @@ fun Route.newsRoute(newsService: NewsService) {
             }
         }
 
+        /**
+         * Tag: News
+         */
         get("/session") {
             val sessionId =
                 call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(

@@ -7,15 +7,23 @@ val logbackVersion: String by project
 val postgresVersion: String by project
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    id("io.ktor.plugin") version "3.1.2"
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.1.20"
+    kotlin("jvm") version "2.2.21"
+    id("io.ktor.plugin") version "3.4.2"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.21"
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 group = "ru.drujite"
 version = "0.0.1"
+
+ktor {
+    openApi {
+        enabled = true
+        codeInferenceEnabled = true
+        onlyCommented = false
+    }
+}
 
 application {
     mainClass = "ru.drujite.ApplicationKt"
@@ -47,15 +55,11 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
     implementation("io.ktor:ktor-server-openapi:$ktorVersion")
+    implementation("io.ktor:ktor-server-routing-openapi:$ktorVersion")
+    implementation("io.ktor:ktor-openapi-schema:$ktorVersion")
     implementation("io.swagger.codegen.v3:swagger-codegen-generators:$swaggerCodegenVersion")
-    implementation("io.ktor:ktor-server-cors-jvm:2.3.4")
+    implementation("io.ktor:ktor-server-cors:$ktorVersion")
     implementation("org.mindrot:jbcrypt:0.4")
-}
-
-tasks.withType<ProcessResources> {
-    from("openapi") {
-        into("openapi")
-    }
 }
 
 ktlint {
@@ -66,6 +70,13 @@ detekt {
     buildUponDefaultConfig = true
     allRules = false
     config.setFrom("$projectDir/config/detekt/detekt.yml")
+}
+
+tasks.test {
+    environment("JWT_SECRET", "test-secret")
+    environment("DB_URL", "jdbc:h2:mem:drujite_test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL")
+    environment("POSTGRES_USER", "sa")
+    environment("POSTGRES_PASSWORD", "")
 }
 
 tasks.check {

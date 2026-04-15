@@ -17,6 +17,9 @@ import services.ClanService
 
 fun Route.clanRoute(clanService: ClanService) {
     authenticate {
+        /**
+         * Tag: Clan
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -30,6 +33,9 @@ fun Route.clanRoute(clanService: ClanService) {
             }
         }
 
+        /**
+         * Tag: Clan
+         */
         post {
             val request = call.receive<AddClanRequest>()
             val clan = request.toModel()
@@ -37,6 +43,9 @@ fun Route.clanRoute(clanService: ClanService) {
             call.respond(HttpStatusCode.Created, IdResponse(clanId))
         }
 
+        /**
+         * Tag: Clan
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -50,6 +59,9 @@ fun Route.clanRoute(clanService: ClanService) {
             }
         }
 
+        /**
+         * Tag: Clan
+         */
         post("/add-to-session") {
             val request = call.receive<ClanToSessionRequest>()
             val result = clanService.addClanToSession(request.clanId, request.sessionId)
@@ -60,6 +72,9 @@ fun Route.clanRoute(clanService: ClanService) {
             }
         }
 
+        /**
+         * Tag: Clan
+         */
         delete("/delete-from-session") {
             val request = call.receive<ClanToSessionRequest>()
             val result = clanService.deleteClanFromSession(request.clanId, request.sessionId)
@@ -70,6 +85,9 @@ fun Route.clanRoute(clanService: ClanService) {
             }
         }
 
+        /**
+         * Tag: Clan
+         */
         get("/session-all") {
             val id =
                 call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(
@@ -79,6 +97,9 @@ fun Route.clanRoute(clanService: ClanService) {
             call.respond(HttpStatusCode.OK, clans.map { it.toResponse() })
         }
 
+        /**
+         * Tag: Clan
+         */
         get("all") {
             val clans = clanService.getAllClans()
             call.respond(HttpStatusCode.OK, clans.map { it.toResponse() })

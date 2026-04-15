@@ -9,6 +9,9 @@ import requests.LoginRequest
 import services.JwtService
 
 fun Route.authRoute(jwtService: JwtService) {
+    /**
+     * Tag: Auth
+     */
     post {
         val user = call.receive<LoginRequest>()
         val token: String? = jwtService.createJwtToken(user)

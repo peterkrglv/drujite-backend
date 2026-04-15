@@ -12,6 +12,9 @@ import ru.drujite.services.ImageService
 
 fun Route.imageRoute(imageService: ImageService) {
     authenticate {
+        /**
+         * Tag: Images
+         */
         post("/{entityType}/{id}") {
             val entityType =
                 call.parameters["entityType"] ?: return@post call.respond(
@@ -34,6 +37,9 @@ fun Route.imageRoute(imageService: ImageService) {
         }
     }
 
+    /**
+     * Tag: Images
+     */
     get("/{entityType}/{id}") {
         val entityType =
             call.parameters["entityType"] ?: return@get call.respond(

@@ -21,6 +21,9 @@ fun Route.usersCharactersRoute(
     characterService: CharacterService,
 ) {
     authenticate {
+        /**
+         * Tag: UsersCharacters
+         */
         get {
             val sessionId =
                 call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(
@@ -41,6 +44,9 @@ fun Route.usersCharactersRoute(
             call.respond(HttpStatusCode.OK, response)
         }
 
+        /**
+         * Tag: UsersCharacters
+         */
         post {
             val characterRequest = call.receive<AddUserSessionCharacter>()
             val principal = call.principal<JWTPrincipal>()
@@ -54,6 +60,9 @@ fun Route.usersCharactersRoute(
             call.respond(HttpStatusCode.Created)
         }
 
+        /**
+         * Tag: UsersCharacters
+         */
         get("/user-all") {
             val principal = call.principal<JWTPrincipal>()
             val userId =
@@ -63,6 +72,9 @@ fun Route.usersCharactersRoute(
             call.respond(HttpStatusCode.OK, response)
         }
 
+        /**
+         * Tag: UsersCharacters
+         */
         get("session-all") {
             val id =
                 call.request.queryParameters["sessionId"]?.toIntOrNull()
@@ -72,6 +84,9 @@ fun Route.usersCharactersRoute(
             call.respond(HttpStatusCode.OK, response)
         }
 
+        /**
+         * Tag: UsersCharacters
+         */
         delete {
             val characterRequest = call.receive<AddUserSessionCharacter>()
             val principal = call.principal<JWTPrincipal>()

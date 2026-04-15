@@ -14,6 +14,9 @@ fun Route.signupRoute(
     jwtService: JwtService,
     userService: UserService,
 ) {
+    /**
+     * Tag: Auth
+     */
     post {
         val signupRequest = call.receive<SignupRequest>()
 

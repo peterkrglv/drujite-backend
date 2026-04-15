@@ -16,17 +16,26 @@ import ru.drujite.services.ClothingService
 
 fun Route.clothingTypeRoute(clothingService: ClothingService) {
     authenticate {
+        /**
+         * Tag: ClothingType
+         */
         get("/all") {
             val clothingTypes = clothingService.getClothingTypes()
             call.respond(HttpStatusCode.OK, clothingTypes.map { ClothingTypeResponse(it.id, it.name, it.isEditable) })
         }
 
+        /**
+         * Tag: ClothingType
+         */
         post {
             val request = call.receive<ClothingTypeRequest>()
             val id = clothingService.addClothingType(request.toModel())
             call.respond(HttpStatusCode.Created, IdResponse(id))
         }
 
+        /**
+         * Tag: ClothingType
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(

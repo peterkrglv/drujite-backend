@@ -23,6 +23,9 @@ fun Route.superAdminRoute(
 ) {
     val logger: Logger = LoggerFactory.getLogger(Route::class.java)
     authenticate {
+        /**
+         * Tag: SuperAdmin
+         */
         post("make-admin") {
             logger.info("Received request to make an admin")
             println("Received request to make an admin")
@@ -56,6 +59,9 @@ fun Route.superAdminRoute(
                 call.respond(HttpStatusCode.BadRequest)
             }
         }
+        /**
+         * Tag: SuperAdmin
+         */
         get("get-users") {
             logger.info("Received request to fetch all users")
             println("Received request to fetch all users")

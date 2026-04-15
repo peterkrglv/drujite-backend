@@ -15,6 +15,9 @@ fun Route.adminAuthRoute(
     jwtService: JwtService,
     userService: UserService,
 ) {
+    /**
+     * Tag: Admin
+     */
     post("/login") {
         val user = call.receive<LoginRequest>()
         val foundUser =
@@ -33,6 +36,9 @@ fun Route.adminAuthRoute(
         )
     }
 
+    /**
+     * Tag: Admin
+     */
     post("/signup") {
         val request = call.receive<SignupRequest>()
         val createdUser =

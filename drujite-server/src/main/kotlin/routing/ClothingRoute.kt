@@ -15,12 +15,18 @@ import ru.drujite.services.ClothingService
 
 fun Route.clothingRoute(clothingService: ClothingService) {
     authenticate {
+        /**
+         * Tag: Clothing
+         */
         post {
             val request = call.receive<ClothingItemRequest>()
             val clothingId = clothingService.addClothingItem(request.toModel())
             call.respond(HttpStatusCode.Created, IdResponse(clothingId))
         }
 
+        /**
+         * Tag: Clothing
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -34,6 +40,9 @@ fun Route.clothingRoute(clothingService: ClothingService) {
             }
         }
 
+        /**
+         * Tag: Clothing
+         */
         get("/all") {
             val clothingItems = clothingService.getAllClothingItems()
             call.respond(HttpStatusCode.OK, clothingItems)

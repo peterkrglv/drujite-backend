@@ -16,12 +16,18 @@ import services.TimeTableService
 
 fun Route.timeTableRoute(timeTableService: TimeTableService) {
     authenticate {
+        /**
+         * Tag: Timetable
+         */
         post {
             val request = call.receive<AddTimeTableRequest>()
             val timeTableId = timeTableService.addTimeTable(request.toModel())
             call.respond(HttpStatusCode.Created, IdResponse(timeTableId))
         }
 
+        /**
+         * Tag: Timetable
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -35,6 +41,9 @@ fun Route.timeTableRoute(timeTableService: TimeTableService) {
             }
         }
 
+        /**
+         * Tag: Timetable
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -48,6 +57,9 @@ fun Route.timeTableRoute(timeTableService: TimeTableService) {
             }
         }
 
+        /**
+         * Tag: Timetable
+         */
         get("/session-all") {
             val sessionId =
                 call.request.queryParameters["sessionId"]?.toIntOrNull() ?: return@get call.respond(

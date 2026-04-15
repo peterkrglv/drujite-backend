@@ -22,6 +22,9 @@ fun Route.sessionRoute(
     sessionService: SessionService,
 ) {
     authenticate {
+        /**
+         * Tag: Session
+         */
         get("/user-sessions") {
             val principal = call.principal<JWTPrincipal>()
             val userId =
@@ -30,11 +33,17 @@ fun Route.sessionRoute(
             call.respond(HttpStatusCode.OK, sessions.map { it.toResponse() })
         }
 
+        /**
+         * Tag: Session
+         */
         get("/all") {
             val sessions = sessionService.getAllSessions()
             call.respond(HttpStatusCode.OK, sessions.map { it.toResponse() })
         }
 
+        /**
+         * Tag: Session
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -46,12 +55,18 @@ fun Route.sessionRoute(
             call.respond(HttpStatusCode.OK, session.toResponse())
         }
 
+        /**
+         * Tag: Session
+         */
         post {
             val sessionRequest = call.receive<SessionRequest>()
             val id = sessionService.addSession(sessionRequest)
             call.respond(HttpStatusCode.Created, IdResponse(id = id))
         }
 
+        /**
+         * Tag: Session
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
