@@ -1,22 +1,62 @@
+# Full stack: docker compose up -d
+# Local Gradle + DB only (Makefile): postgres is started explicitly; api optional via full compose up
+
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: drujite-postgres
-    restart: unless-stopped
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+    container_name: drujite-pg-container
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-drujite}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-drujite}
       POSTGRES_DB: ${POSTGRES_DB:-drujite}
+    ports:
+      - "${POSTGRES_PORT:-25432}:5432"
     volumes:
-      - drujite_pgdata:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
+    command: ["postgres", "-c", "log_statement=all"]
+    restart: on-failure
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 3s
+      interval: 5s
       timeout: 5s
-      retries: 20
+      retries: 5
       start_period: 5s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  api:
+    build:
+      context: ./drujite-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: drujite-container
+    env_file:
+      - .env
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      # Inside Docker, DB is reached via service name — overrides host-only DB_URL from .env
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-drujite}
+      POSTGRES_USER: ${POSTGRES_USER:-drujite}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-drujite}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - images_sessions:/app/storage/images/sessions
+      - images_characters:/app/storage/images/characters
+      - images_news:/app/storage/images/news
+      - images_clothing:/app/storage/images/clothing
+      - images_clothingIcons:/app/storage/images/clothingIcons
 
 volumes:
-  drujite_pgdata:
+  pg_data:
+  images_sessions:
+  images_characters:
+  images_news:
+  images_clothing:
+  images_clothingIcons:
