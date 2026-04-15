@@ -41,10 +41,10 @@ fun Route.characterRoute(characterService: CharacterService) {
             val request = call.receive<AddCharacterRequest>()
             val character =
                 CharacterModel(
+                    clanId = request.clanId,
                     id = 0,
                     name = request.name,
                     story = request.story,
-                    clanId = request.clanId,
                     imageUrl = request.image,
                 )
             val characterId = characterService.addCharacter(character)
@@ -100,9 +100,9 @@ fun Route.characterRoute(characterService: CharacterService) {
 
 private fun CharacterModel.toResponse() =
     CharacterResponse(
+        clanId = this.clanId,
         id = this.id,
+        imageUrl = this.imageUrl,
         name = this.name,
         story = this.story,
-        clanId = this.clanId,
-        imageUrl = this.imageUrl,
     )

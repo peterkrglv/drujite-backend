@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class ClothingItemRequest(
     val name: String?,
     val typeId: Int,
-    val imageUrl: String? = null,
     val iconUrl: String? = null,
+    val imageUrl: String? = null,
 )

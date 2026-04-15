@@ -20,9 +20,9 @@ class GoalRepositoryImpl : GoalRepository {
         suspendTransaction {
             GoalDAO
                 .new {
-                    usersSessionId = goal.usersSessionId
-                    name = goal.name
                     isCompleted = goal.isCompleted
+                    name = goal.name
+                    usersSessionId = goal.usersSessionId
                 }.id.value
         }
 
@@ -31,9 +31,9 @@ class GoalRepositoryImpl : GoalRepository {
             GoalDAO.findById(id)?.let {
                 GoalModel(
                     id = it.id.value,
-                    usersSessionId = it.usersSessionId,
-                    name = it.name,
                     isCompleted = it.isCompleted,
+                    name = it.name,
+                    usersSessionId = it.usersSessionId,
                 )
             }
         }
@@ -51,9 +51,9 @@ class GoalRepositoryImpl : GoalRepository {
             GoalDAO.find { GoalTable.usersSessionId eq usersSessionId }.map {
                 GoalModel(
                     id = it.id.value,
-                    usersSessionId = it.usersSessionId,
-                    name = it.name,
                     isCompleted = it.isCompleted,
+                    name = it.name,
+                    usersSessionId = it.usersSessionId,
                 )
             }
         }
@@ -86,10 +86,10 @@ class GoalRepositoryImpl : GoalRepository {
                                 null
                             } else {
                                 GoalModelWithCharacterdId(
-                                    id = it[GoalTable.id].value,
                                     characterId = it[UsersSessionsTable.characterId] ?: -1,
-                                    name = it[GoalTable.name],
+                                    id = it[GoalTable.id].value,
                                     isCompleted = it[GoalTable.isCompleted],
+                                    name = it[GoalTable.name],
                                 )
                             }
                         }

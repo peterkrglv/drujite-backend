@@ -40,14 +40,14 @@ private val apiDescription =
     """.trimIndent()
 
 private fun Route.mountOpenApiAndSwagger(
-    v1Base: String,
     docSource: OpenApiDocSource,
+    v1Base: String,
 ) {
     val info =
         OpenApiInfo(
+            description = apiDescription,
             title = "Drujite API",
             version = "1.0.0",
-            description = apiDescription,
         )
     route(v1Base) {
         openAPI(path = "openapi") {
@@ -66,12 +66,12 @@ private fun Route.mountOpenApiAndSwagger(
 private fun Route.swaggerPathRedirects(v1Base: String) {
     val redirects =
         listOf(
-            "$v1Base/swagger/" to "$v1Base/swagger",
             "$v1Base/openapi/" to "$v1Base/openapi",
-            "/swagger" to "$v1Base/swagger",
-            "/swagger/" to "$v1Base/swagger",
+            "$v1Base/swagger/" to "$v1Base/swagger",
             "/openapi" to "$v1Base/openapi",
             "/openapi/" to "$v1Base/openapi",
+            "/swagger" to "$v1Base/swagger",
+            "/swagger/" to "$v1Base/swagger",
         )
     for ((from, to) in redirects) {
         get(from) {
@@ -83,71 +83,71 @@ private fun Route.swaggerPathRedirects(v1Base: String) {
 @Suppress("LongParameterList")
 private fun Route.registerV1Routes(
     v1: String,
-    userService: UserService,
-    jwtService: JwtService,
-    sessionService: SessionService,
-    usersSessionsService: UsersSessionsService,
     characterService: CharacterService,
-    goalService: GoalService,
-    timeTableService: TimeTableService,
-    clanService: ClanService,
-    newsService: NewsService,
-    imageService: ImageService,
     clothingService: ClothingService,
+    clanService: ClanService,
+    goalService: GoalService,
+    imageService: ImageService,
+    jwtService: JwtService,
+    newsService: NewsService,
+    sessionService: SessionService,
+    timeTableService: TimeTableService,
+    userService: UserService,
+    usersSessionsService: UsersSessionsService,
 ) {
-    route(v1 + "user") {
-        userRoute(userService, jwtService)
+    route(v1 + "admin") {
+        adminAuthRoute(jwtService, userService)
     }
     route(v1 + "auth") {
         authRoute(jwtService)
     }
-    route(v1 + "signup") {
-        signupRoute(jwtService, userService)
-    }
-    route(v1 + "session") {
-        sessionRoute(jwtService, sessionService)
-    }
-    route(v1 + "users-sessions") {
-        usersSessionsRoute(jwtService, usersSessionsService)
-    }
-    route(v1 + "users-characters") {
-        usersCharactersRoute(jwtService, usersSessionsService, characterService)
-    }
     route(v1 + "character") {
         characterRoute(characterService)
-    }
-    route(v1 + "goal") {
-        goalRoute(goalService, jwtService)
-    }
-    route(v1 + "timetable") {
-        timeTableRoute(timeTableService)
-    }
-    route(v1 + "event") {
-        eventRoute(timeTableService)
-    }
-    route(v1 + "clan") {
-        clanRoute(clanService = clanService)
-    }
-    route(v1 + "news") {
-        newsRoute(newsService)
-    }
-    route(v1 + "images") {
-        imageRoute(imageService)
-    }
-    route(v1 + "admin") {
-        adminAuthRoute(jwtService, userService)
-    }
-    route(v1 + "clothing-type") {
-        clothingTypeRoute(clothingService)
-    }
-    route(v1 + "clothing-item") {
-        clothingRoute(clothingService)
     }
     route(v1 + "characters-clothing") {
         charactersClothingRoute(clothingService)
     }
+    route(v1 + "clan") {
+        clanRoute(clanService = clanService)
+    }
+    route(v1 + "clothing-item") {
+        clothingRoute(clothingService)
+    }
+    route(v1 + "clothing-type") {
+        clothingTypeRoute(clothingService)
+    }
+    route(v1 + "event") {
+        eventRoute(timeTableService)
+    }
+    route(v1 + "goal") {
+        goalRoute(goalService, jwtService)
+    }
+    route(v1 + "images") {
+        imageRoute(imageService)
+    }
+    route(v1 + "news") {
+        newsRoute(newsService)
+    }
+    route(v1 + "session") {
+        sessionRoute(jwtService, sessionService)
+    }
+    route(v1 + "signup") {
+        signupRoute(jwtService, userService)
+    }
     route(v1 + "super-admin") {
         superAdminRoute(jwtService, userService)
+    }
+    route(v1 + "timetable") {
+        timeTableRoute(timeTableService)
+    }
+    route(v1 + "user") {
+        userRoute(userService, jwtService)
+    }
+    route(v1 + "users-characters") {
+        usersCharactersRoute(jwtService, usersSessionsService, characterService)
+    }
+    route(v1 + "users-sessions") {
+        usersSessionsRoute(jwtService, usersSessionsService)
     }
 }
 
@@ -188,17 +188,17 @@ private fun Route.welcomePage(
 }
 
 fun Application.configureRouting(
-    userService: UserService,
-    jwtService: JwtService,
-    sessionService: SessionService,
-    usersSessionsService: UsersSessionsService,
     characterService: CharacterService,
-    goalService: GoalService,
-    timeTableService: TimeTableService,
-    clanService: ClanService,
-    newsService: NewsService,
-    imageService: ImageService,
     clothingService: ClothingService,
+    clanService: ClanService,
+    goalService: GoalService,
+    imageService: ImageService,
+    jwtService: JwtService,
+    newsService: NewsService,
+    sessionService: SessionService,
+    timeTableService: TimeTableService,
+    userService: UserService,
+    usersSessionsService: UsersSessionsService,
 ) {
     val v1 = "/api/v1/"
     val v1Base = "/api/v1"
@@ -208,21 +208,21 @@ fun Application.configureRouting(
         }
 
     routing {
-        mountOpenApiAndSwagger(v1Base, routingDocSource)
+        mountOpenApiAndSwagger(routingDocSource, v1Base)
         swaggerPathRedirects(v1Base)
         registerV1Routes(
             v1,
-            userService,
-            jwtService,
-            sessionService,
-            usersSessionsService,
             characterService,
-            goalService,
-            timeTableService,
-            clanService,
-            newsService,
-            imageService,
             clothingService,
+            clanService,
+            goalService,
+            imageService,
+            jwtService,
+            newsService,
+            sessionService,
+            timeTableService,
+            userService,
+            usersSessionsService,
         )
         welcomePage(v1, v1Base)
     }

@@ -24,12 +24,12 @@ class CharacterService(
             val user = usersSessionsRepository.getUserByCharacter(character.id)
             if (clan != null && user != null) {
                 return UserCharacterResponse(
+                    clan = clan.name,
                     id = character.id,
+                    imageUrl = character.imageUrl,
                     name = character.name,
                     player = user.username,
                     story = character.story,
-                    clan = clan.name,
-                    imageUrl = character.imageUrl,
                 )
             }
         }

@@ -12,8 +12,8 @@ class TimeTableRepositoryImpl : TimeTableRepository {
         suspendTransaction {
             TimeTableDAO
                 .new {
-                    sessionId = timeTable.sessionId
                     date = java.time.LocalDate.parse(timeTable.date)
+                    sessionId = timeTable.sessionId
                 }.id.value
         }
 
@@ -29,9 +29,9 @@ class TimeTableRepositoryImpl : TimeTableRepository {
                 .map {
                     it.let {
                         TimeTableModel(
+                            date = it.date.toString(),
                             id = it.id.value,
                             sessionId = it.sessionId,
-                            date = it.date.toString(),
                         )
                     }
                 }
@@ -43,9 +43,9 @@ class TimeTableRepositoryImpl : TimeTableRepository {
                 .findById(timeTableId)
                 ?.let {
                     TimeTableModel(
+                        date = it.date.toString(),
                         id = it.id.value,
                         sessionId = it.sessionId,
-                        date = it.date.toString(),
                     )
                 }
         }
@@ -60,9 +60,9 @@ class TimeTableRepositoryImpl : TimeTableRepository {
                 .firstOrNull()
                 ?.let {
                     TimeTableModel(
+                        date = it.date.toString(),
                         id = it.id.value,
                         sessionId = it.sessionId,
-                        date = it.date.toString(),
                     )
                 }
         }

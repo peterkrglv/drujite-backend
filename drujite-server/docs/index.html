@@ -693,9 +693,9 @@
   "title" : "requests.AddCharacterRequest",
   "required" : [ "clanId", "name", "story" ],
   "properties" : {
+    "clanId" : { },
     "name" : { },
     "story" : { },
-    "clanId" : { },
     "image" : { }
   }
 };
@@ -721,9 +721,9 @@
   "title" : "requests.AddEventRequest",
   "required" : [ "name", "time", "timetableId" ],
   "properties" : {
-    "timetableId" : { },
     "name" : { },
     "time" : { },
+    "timetableId" : { },
     "isTitle" : { }
   }
 };
@@ -732,8 +732,8 @@
   "required" : [ "characterId", "name", "sessionId" ],
   "properties" : {
     "characterId" : { },
-    "sessionId" : { },
     "name" : { },
+    "sessionId" : { },
     "isCompleted" : { }
   }
 };
@@ -741,9 +741,9 @@
   "title" : "requests.AddNewsRequest",
   "required" : [ "content", "sessionId", "title" ],
   "properties" : {
+    "content" : { },
     "sessionId" : { },
     "title" : { },
-    "content" : { },
     "imageUrl" : { }
   }
 };
@@ -758,16 +758,16 @@
   "title" : "requests.AddTimeTableRequest",
   "required" : [ "date", "sessionId" ],
   "properties" : {
-    "sessionId" : { },
-    "date" : { }
+    "date" : { },
+    "sessionId" : { }
   }
 };
             defs["AddUserSessionCharacter"] = {
   "title" : "requests.AddUserSessionCharacter",
   "required" : [ "characterId", "sessionId" ],
   "properties" : {
-    "sessionId" : { },
-    "characterId" : { }
+    "characterId" : { },
+    "sessionId" : { }
   }
 };
             defs["ChangeCharactersStoryRequest"] = {
@@ -782,11 +782,11 @@
   "title" : "responses.CharacterResponse",
   "required" : [ "clanId", "id", "name", "story" ],
   "properties" : {
-    "id" : { },
-    "name" : { },
-    "story" : { },
     "clanId" : { },
-    "imageUrl" : { }
+    "id" : { },
+    "imageUrl" : { },
+    "name" : { },
+    "story" : { }
   }
 };
             defs["ClanResponse"] = {
@@ -810,11 +810,11 @@
   "title" : "ru.drujite.models.ClothingItem",
   "required" : [ "id", "typeId" ],
   "properties" : {
+    "iconUrl" : { },
     "id" : { },
-    "name" : { },
-    "typeId" : { },
     "imageUrl" : { },
-    "iconUrl" : { }
+    "name" : { },
+    "typeId" : { }
   }
 };
             defs["ClothingItemRequest"] = {
@@ -823,16 +823,16 @@
   "properties" : {
     "name" : { },
     "typeId" : { },
-    "imageUrl" : { },
-    "iconUrl" : { }
+    "iconUrl" : { },
+    "imageUrl" : { }
   }
 };
             defs["ClothingTypeRequest"] = {
   "title" : "ru.drujite.requests.ClothingTypeRequest",
   "required" : [ "isEditable", "name" ],
   "properties" : {
-    "name" : { },
-    "isEditable" : { }
+    "isEditable" : { },
+    "name" : { }
   }
 };
             defs["ClothingTypeResponse"] = {
@@ -840,8 +840,8 @@
   "required" : [ "id", "isEditable", "name" ],
   "properties" : {
     "id" : { },
-    "name" : { },
-    "isEditable" : { }
+    "isEditable" : { },
+    "name" : { }
   }
 };
             defs["ClothingTypeWithItems"] = {
@@ -849,13 +849,13 @@
   "required" : [ "id", "isEditable", "items", "name" ],
   "properties" : {
     "id" : { },
-    "name" : { },
     "isEditable" : { },
     "items" : {
       "items" : {
         "$ref" : "#/components/schemas/ClothingItem"
       }
-    }
+    },
+    "name" : { }
   }
 };
             defs["EventResponse"] = {
@@ -863,38 +863,38 @@
   "required" : [ "id", "isTitle", "name", "timetableId" ],
   "properties" : {
     "id" : { },
-    "timetableId" : { },
+    "isTitle" : { },
     "name" : { },
     "time" : { },
-    "isTitle" : { }
+    "timetableId" : { }
   }
 };
             defs["GetTimetableBySessionAndDate"] = {
   "title" : "requests.GetTimetableBySessionAndDate",
   "required" : [ "date", "sessionId" ],
   "properties" : {
-    "sessionId" : { },
-    "date" : { }
+    "date" : { },
+    "sessionId" : { }
   }
 };
             defs["GoalModelWithCharacterIdResponse"] = {
   "title" : "ru.drujite.responses.GoalModelWithCharacterIdResponse",
   "required" : [ "characterId", "id", "isCompleted", "name" ],
   "properties" : {
-    "id" : { },
     "characterId" : { },
-    "name" : { },
-    "isCompleted" : { }
+    "id" : { },
+    "isCompleted" : { },
+    "name" : { }
   }
 };
             defs["GoalResponse"] = {
   "title" : "responses.GoalResponse",
   "required" : [ "characterId", "id", "isCompleted", "name" ],
   "properties" : {
-    "id" : { },
     "characterId" : { },
-    "name" : { },
-    "isCompleted" : { }
+    "id" : { },
+    "isCompleted" : { },
+    "name" : { }
   }
 };
             defs["IdRequest"] = {
@@ -915,8 +915,8 @@
   "title" : "requests.LoginRequest",
   "required" : [ "password", "phone" ],
   "properties" : {
-    "phone" : { },
-    "password" : { }
+    "password" : { },
+    "phone" : { }
   }
 };
             defs["MakeAdminRequest"] = {
@@ -930,22 +930,22 @@
   "title" : "responses.NewsResponse",
   "required" : [ "content", "dateTime", "id", "sessionId", "title" ],
   "properties" : {
-    "id" : { },
-    "sessionId" : { },
-    "title" : { },
     "content" : { },
     "dateTime" : { },
-    "imageUrl" : { }
+    "id" : { },
+    "imageUrl" : { },
+    "sessionId" : { },
+    "title" : { }
   }
 };
             defs["SessionRequest"] = {
   "title" : "requests.SessionRequest",
   "required" : [ "description", "endDate", "name", "startDate" ],
   "properties" : {
-    "name" : { },
     "description" : { },
-    "startDate" : { },
     "endDate" : { },
+    "name" : { },
+    "startDate" : { },
     "imageUrl" : { }
   }
 };
@@ -953,11 +953,11 @@
   "title" : "responses.SessionResponse",
   "required" : [ "description", "endDate", "id", "name", "startDate" ],
   "properties" : {
+    "description" : { },
+    "endDate" : { },
     "id" : { },
     "name" : { },
-    "description" : { },
     "startDate" : { },
-    "endDate" : { },
     "imageUrl" : { },
     "qrLink" : { }
   }
@@ -966,48 +966,48 @@
   "title" : "ru.drujite.requests.SignupRequest",
   "required" : [ "gender", "password", "phone", "username" ],
   "properties" : {
-    "username" : { },
-    "phone" : { },
+    "gender" : { },
     "password" : { },
-    "gender" : { }
+    "phone" : { },
+    "username" : { }
   }
 };
             defs["TimeTableResponse"] = {
   "title" : "responses.TimeTableResponse",
   "required" : [ "date", "id", "sessionId" ],
   "properties" : {
+    "date" : { },
     "id" : { },
-    "sessionId" : { },
-    "date" : { }
+    "sessionId" : { }
   }
 };
             defs["UserAdminResponse"] = {
   "title" : "ru.drujite.responses.UserAdminResponse",
   "required" : [ "isAdmin", "phone", "username" ],
   "properties" : {
+    "isAdmin" : { },
     "phone" : { },
-    "username" : { },
-    "isAdmin" : { }
+    "username" : { }
   }
 };
             defs["UserCharacterResponse"] = {
   "title" : "responses.UserCharacterResponse",
   "required" : [ "clan", "id", "name", "player", "story" ],
   "properties" : {
+    "clan" : { },
     "id" : { },
+    "imageUrl" : { },
     "name" : { },
     "player" : { },
-    "story" : { },
-    "clan" : { },
-    "imageUrl" : { }
+    "story" : { }
   }
 };
             defs["UserResponse"] = {
   "title" : "ru.drujite.responces.UserResponse",
   "required" : [ "phone", "username" ],
   "properties" : {
-    "username" : { },
-    "phone" : { }
+    "phone" : { },
+    "username" : { }
   }
 };
   </script>

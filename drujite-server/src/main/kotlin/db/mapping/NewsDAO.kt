@@ -29,10 +29,10 @@ class NewsDAO(
 
 fun daoToModel(dao: NewsDAO) =
     NewsModel(
-        id = dao.id.value,
-        sessionId = dao.sessionId,
-        title = dao.title,
         content = dao.content,
         dateTime = dao.time.toString(),
+        id = dao.id.value,
         imageUrl = dao.imageUrl,
+        sessionId = dao.sessionId,
+        title = dao.title,
     )

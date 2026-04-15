@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SignupRequest(
-    val username: String,
-    val phone: String,
-    val password: String,
     val gender: String,
+    val password: String,
+    val phone: String,
+    val username: String,
 )

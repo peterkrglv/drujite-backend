@@ -13,12 +13,12 @@ class SessionService(
     suspend fun addSession(request: SessionRequest) =
         sessionRepository.add(
             SessionModel(
-                id = 0,
-                name = request.name,
                 description = request.description,
-                startDate = request.startDate,
                 endDate = request.endDate,
+                id = 0,
                 imageUrl = request.imageUrl,
+                name = request.name,
+                startDate = request.startDate,
             ),
         )
 

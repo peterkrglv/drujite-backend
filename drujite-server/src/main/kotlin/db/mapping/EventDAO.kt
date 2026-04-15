@@ -28,8 +28,8 @@ class EventDAO(
 fun daoToModel(dao: EventDAO) =
     EventModel(
         id = dao.id.value,
-        timetableId = dao.timetableId,
+        isTitle = dao.isTitle,
         name = dao.name,
         time = dao.time.toString(),
-        isTitle = dao.isTitle,
+        timetableId = dao.timetableId,
     )

@@ -25,7 +25,7 @@ class GoalDAO(
 fun daoToModel(dao: GoalDAO) =
     GoalModel(
         id = dao.id.value,
-        usersSessionId = dao.usersSessionId,
-        name = dao.name,
         isCompleted = dao.isCompleted,
+        name = dao.name,
+        usersSessionId = dao.usersSessionId,
     )

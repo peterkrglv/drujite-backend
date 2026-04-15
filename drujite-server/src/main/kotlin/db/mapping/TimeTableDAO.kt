@@ -23,7 +23,7 @@ class TimeTableDAO(
 
 fun daoToModel(dao: TimeTableDAO) =
     TimeTableModel(
+        date = dao.date.toString(),
         id = dao.id.value,
         sessionId = dao.sessionId,
-        date = dao.date.toString(),
     )

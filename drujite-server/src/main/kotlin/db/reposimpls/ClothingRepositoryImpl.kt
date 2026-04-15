@@ -17,8 +17,8 @@ class ClothingRepositoryImpl : ClothingRepository {
         suspendTransaction {
             ClothingTypeDAO
                 .new {
-                    this.name = clothingType.name
                     this.isEditable = clothingType.isEditable
+                    this.name = clothingType.name
                 }.id.value
         }
 
@@ -32,8 +32,8 @@ class ClothingRepositoryImpl : ClothingRepository {
             ClothingTypeDAO.all().map {
                 ClothingType(
                     id = it.id.value,
-                    name = it.name,
                     isEditable = it.isEditable,
+                    name = it.name,
                 )
             }
         }
@@ -43,8 +43,8 @@ class ClothingRepositoryImpl : ClothingRepository {
             ClothingTypeDAO.find { ClothingTypeTable.isEditable eq true }.map {
                 ClothingType(
                     id = it.id.value,
-                    name = it.name,
                     isEditable = it.isEditable,
+                    name = it.name,
                 )
             }
         }
@@ -115,11 +115,11 @@ class ClothingRepositoryImpl : ClothingRepository {
                 val clothingItem = it.clothingItemId ?: return@mapNotNull null
                 ClothingItemDAO.findById(clothingItem)?.let { item ->
                     ClothingItem(
-                        id = item.id.value,
-                        typeId = item.typeId,
-                        name = item.name,
-                        imageUrl = item.imageUrl,
                         iconUrl = item.iconImageUrl,
+                        id = item.id.value,
+                        imageUrl = item.imageUrl,
+                        name = item.name,
+                        typeId = item.typeId,
                     )
                 }
             }
@@ -132,18 +132,18 @@ class ClothingRepositoryImpl : ClothingRepository {
                 val items =
                     ClothingItemDAO.find { ClothingItemTable.typeId eq type.id.value }.map {
                         ClothingItem(
+                            iconUrl = it.iconImageUrl,
                             id = it.id.value,
-                            typeId = it.typeId,
                             imageUrl = it.imageUrl,
                             name = it.name,
-                            iconUrl = it.iconImageUrl,
+                            typeId = it.typeId,
                         )
                     }
                 ClothingTypeWithItems(
                     id = type.id.value,
-                    name = type.name,
-                    items = items,
                     isEditable = type.isEditable,
+                    items = items,
+                    name = type.name,
                 )
             }
         }
@@ -156,11 +156,11 @@ class ClothingRepositoryImpl : ClothingRepository {
                     val type = ClothingTypeDAO.findById(item.typeId)
                     if (type?.isEditable == true) {
                         ClothingItem(
-                            id = item.id.value,
-                            typeId = item.typeId,
-                            name = item.name,
-                            imageUrl = item.imageUrl,
                             iconUrl = item.iconImageUrl,
+                            id = item.id.value,
+                            imageUrl = item.imageUrl,
+                            name = item.name,
+                            typeId = item.typeId,
                         )
                     } else {
                         null

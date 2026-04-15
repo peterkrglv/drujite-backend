@@ -47,10 +47,10 @@ class UserDAO(
 
 fun daoToModel(dao: UserDAO) =
     UserModel(
+        gender = dao.gender,
         id = dao.id.value,
+        password = dao.password,
         phone = dao.phone,
         username = dao.username,
-        password = dao.password,
-        gender = dao.gender,
         isAdmin = dao.isAdmin,
     )

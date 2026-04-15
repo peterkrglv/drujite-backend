@@ -35,16 +35,16 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    val userRepository = UserRepositoryImpl()
-    val sessionRepository = SessionRepositoryImpl()
-    val usersSessionRepository = UsersSessionsRepositoryImpl()
     val characterRepository = CharacterRepositoryImpl()
-    val goalRepository = GoalRepositoryImpl()
-    val timeTableRepository = TimeTableRepositoryImpl()
-    val eventRepository = EventRepositoryImpl()
     val clanRepository = ClanRepositoryImpl()
-    val newsRepository = NewsRepositoryImpl()
     val clothingRepository = ClothingRepositoryImpl()
+    val eventRepository = EventRepositoryImpl()
+    val goalRepository = GoalRepositoryImpl()
+    val newsRepository = NewsRepositoryImpl()
+    val sessionRepository = SessionRepositoryImpl()
+    val timeTableRepository = TimeTableRepositoryImpl()
+    val userRepository = UserRepositoryImpl()
+    val usersSessionRepository = UsersSessionsRepositoryImpl()
 
     val userService = UserService(userRepository)
     val jwtService = JwtService(this, userService)
@@ -61,17 +61,17 @@ fun Application.module() {
     configureSerialization()
     configureSecurity(jwtService)
     configureRouting(
-        userService,
-        jwtService,
-        sessionService,
-        usersSessionService,
-        characterService,
-        goalService,
-        timeTableService,
-        clanService,
-        newsService,
-        imageService,
-        clothingService,
+        characterService = characterService,
+        clothingService = clothingService,
+        clanService = clanService,
+        goalService = goalService,
+        imageService = imageService,
+        jwtService = jwtService,
+        newsService = newsService,
+        sessionService = sessionService,
+        timeTableService = timeTableService,
+        userService = userService,
+        usersSessionsService = usersSessionService,
     )
     configureDatabases()
     configureMonitoring()

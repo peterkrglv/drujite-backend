@@ -31,11 +31,11 @@ class SessionDAO(
 
 fun daoToModel(dao: SessionDAO) =
     SessionModel(
-        id = dao.id.value,
-        name = dao.name,
         description = dao.description,
-        startDate = dao.startDate.toString(),
         endDate = dao.endDate.toString(),
+        id = dao.id.value,
         imageUrl = dao.imageUrl,
+        name = dao.name,
+        startDate = dao.startDate.toString(),
         qrLink = dao.qr,
     )

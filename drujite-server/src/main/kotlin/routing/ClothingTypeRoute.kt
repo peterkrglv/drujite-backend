@@ -21,7 +21,10 @@ fun Route.clothingTypeRoute(clothingService: ClothingService) {
          */
         get("/all") {
             val clothingTypes = clothingService.getClothingTypes()
-            call.respond(HttpStatusCode.OK, clothingTypes.map { ClothingTypeResponse(it.id, it.name, it.isEditable) })
+            call.respond(
+                HttpStatusCode.OK,
+                clothingTypes.map { ClothingTypeResponse(it.id, it.isEditable, it.name) },
+            )
         }
 
         /**
@@ -54,6 +57,6 @@ fun Route.clothingTypeRoute(clothingService: ClothingService) {
 private fun ClothingTypeRequest.toModel() =
     ClothingType(
         id = 0,
-        name = name,
         isEditable = isEditable,
+        name = name,
     )
