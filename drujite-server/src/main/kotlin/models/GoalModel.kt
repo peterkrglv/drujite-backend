@@ -1,8 +1,8 @@
 package models
 
-data class GoalModel (
+data class GoalModel(
     val id: Int,
     val usersSessionId: Int,
     val name: String,
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
 )

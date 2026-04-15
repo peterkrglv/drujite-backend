@@ -11,9 +11,14 @@ class ImageService(
     private val newsRepository: NewsRepository,
     private val sessionRepository: SessionRepository,
     private val clothingRepository: ClothingRepository,
-    private val basePath: String = "storage/images"
+    private val basePath: String = "storage/images",
 ) {
-    suspend fun saveImage(entityType: String, id: Int, fileBytes: ByteArray, fileExtension: String = "jpg"): Boolean {
+    suspend fun saveImage(
+        entityType: String,
+        id: Int,
+        fileBytes: ByteArray,
+        fileExtension: String = "jpg",
+    ): Boolean {
         val folderPath = "$basePath/$entityType"
         val filePath = "$folderPath/$id.$fileExtension"
 
@@ -32,7 +37,10 @@ class ImageService(
         }
     }
 
-    fun getImagePath(entityType: String, id: Int): File? {
+    fun getImagePath(
+        entityType: String,
+        id: Int,
+    ): File? {
         val folderPath = "$basePath/$entityType"
         val folder = File(folderPath)
 

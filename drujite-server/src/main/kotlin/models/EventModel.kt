@@ -1,6 +1,6 @@
 package models
 
-data class EventModel (
+data class EventModel(
     val id: Int,
     val timetableId: Int,
     val name: String,

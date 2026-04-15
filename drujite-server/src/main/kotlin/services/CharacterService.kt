@@ -12,8 +12,11 @@ class CharacterService(
     private val clanRepository: ClanRepository,
 ) {
     suspend fun getCharacter(id: Int) = characterRepository.get(id)
+
     suspend fun addCharacter(character: CharacterModel) = characterRepository.add(character)
+
     suspend fun deleteCharacter(id: Int) = characterRepository.delete(id)
+
     suspend fun getCharacterWithClanAndUser(id: Int): UserCharacterResponse? {
         val character = characterRepository.get(id)
         if (character != null) {
@@ -26,12 +29,15 @@ class CharacterService(
                     player = user.username,
                     story = character.story,
                     clan = clan.name,
-                    imageUrl = character.imageUrl
+                    imageUrl = character.imageUrl,
                 )
             }
         }
         return null
     }
 
-    suspend fun changeCharactersStory(id: Int, newStory: String) = characterRepository.changeStory(id, newStory)
+    suspend fun changeCharactersStory(
+        id: Int,
+        newStory: String,
+    ) = characterRepository.changeStory(id, newStory)
 }

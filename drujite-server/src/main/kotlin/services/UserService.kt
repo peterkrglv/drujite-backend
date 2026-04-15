@@ -2,18 +2,14 @@ package services
 
 import db.repos.UserRepository
 import models.UserModel
-import java.util.*
+import java.util.UUID
 
-class UserService (
-    private val userRepository: UserRepository
+class UserService(
+    private val userRepository: UserRepository,
 ) {
-    suspend fun findById(id: String): UserModel? {
-        return userRepository.get(UUID.fromString(id))
-    }
+    suspend fun findById(id: String): UserModel? = userRepository.get(UUID.fromString(id))
 
-    suspend fun findByPhone(phone: String): UserModel? {
-        return userRepository.getByPhone(phone)
-    }
+    suspend fun findByPhone(phone: String): UserModel? = userRepository.getByPhone(phone)
 
     suspend fun addUser(user: UserModel): UserModel? {
         val foundUser: UserModel? = userRepository.getByPhone(user.phone)
@@ -24,19 +20,11 @@ class UserService (
         return userRepository.add(user)
     }
 
-    suspend fun checkIsAdmin(id: String): Boolean {
-        return userRepository.checkIsAdmin(UUID.fromString(id))
-    }
+    suspend fun checkIsAdmin(id: String): Boolean = userRepository.checkIsAdmin(UUID.fromString(id))
 
-    suspend fun makeAdmin(uuid: UUID): Boolean {
-        return userRepository.makeAdmin(uuid)
-    }
+    suspend fun makeAdmin(uuid: UUID): Boolean = userRepository.makeAdmin(uuid)
 
-    suspend fun checkIfSuperAdmin(id: String): Boolean {
-        return userRepository.checkIfSuperAdmin(UUID.fromString(id))
-    }
+    suspend fun checkIfSuperAdmin(id: String): Boolean = userRepository.checkIfSuperAdmin(UUID.fromString(id))
 
-    suspend fun getAllUsers(): List<UserModel> {
-        return userRepository.getAllUsers()
-    }
+    suspend fun getAllUsers(): List<UserModel> = userRepository.getAllUsers()
 }

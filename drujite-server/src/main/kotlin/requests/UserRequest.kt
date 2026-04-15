@@ -3,6 +3,6 @@ package requests
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserRequest (
-    val token: String
+data class UserRequest(
+    val token: String,
 )

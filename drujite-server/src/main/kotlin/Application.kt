@@ -1,24 +1,40 @@
 package ru.drujite
 
 import configuration.configureDatabases
-import db.repos_impls.*
-import io.ktor.server.application.*
+import db.reposimpls.CharacterRepositoryImpl
+import db.reposimpls.ClanRepositoryImpl
+import db.reposimpls.ClothingRepositoryImpl
+import db.reposimpls.EventRepositoryImpl
+import db.reposimpls.GoalRepositoryImpl
+import db.reposimpls.NewsRepositoryImpl
+import db.reposimpls.SessionRepositoryImpl
+import db.reposimpls.TimeTableRepositoryImpl
+import db.reposimpls.UserRepositoryImpl
+import db.reposimpls.UsersSessionsRepositoryImpl
+import io.ktor.server.application.Application
+import io.ktor.server.netty.EngineMain
 import routing.configureRouting
 import ru.drujite.configuration.configureCORS
 import ru.drujite.configuration.configureMonitoring
 import ru.drujite.configuration.configureSecurity
 import ru.drujite.configuration.configureSerialization
-import ru.drujite.db.repos_impls.ClothingRepositoryImpl
 import ru.drujite.services.ClothingService
 import ru.drujite.services.ImageService
-import services.*
+import services.CharacterService
+import services.ClanService
+import services.GoalService
+import services.JwtService
+import services.NewsService
+import services.SessionService
+import services.TimeTableService
+import services.UserService
+import services.UsersSessionsService
 
 fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
+    EngineMain.main(args)
 }
 
 fun Application.module() {
-
     val userRepository = UserRepositoryImpl()
     val sessionRepository = SessionRepositoryImpl()
     val usersSessionRepository = UsersSessionsRepositoryImpl()
@@ -29,7 +45,6 @@ fun Application.module() {
     val clanRepository = ClanRepositoryImpl()
     val newsRepository = NewsRepositoryImpl()
     val clothingRepository = ClothingRepositoryImpl()
-
 
     val userService = UserService(userRepository)
     val jwtService = JwtService(this, userService)
@@ -56,7 +71,7 @@ fun Application.module() {
         clanService,
         newsService,
         imageService,
-        clothingService
+        clothingService,
     )
     configureDatabases()
     configureMonitoring()

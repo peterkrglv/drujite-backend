@@ -3,7 +3,7 @@ package requests
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AddTimeTableRequest (
+data class AddTimeTableRequest(
     val sessionId: Int,
-    val date: String
+    val date: String,
 )

@@ -1,17 +1,19 @@
 package routing
 
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import models.SessionModel
-import requests.IdRequest
 import requests.SessionRequest
 import responses.IdResponse
 import responses.SessionResponse
-import ru.drujite.requests.AddSessionByQRRequest
 import services.JwtService
 import services.SessionService
 
@@ -34,11 +36,13 @@ fun Route.sessionRoute(
         }
 
         get {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
-                HttpStatusCode.BadRequest
-            )
-            val session = sessionService.getSession(id)
-                ?: return@get call.respond(HttpStatusCode.NotFound)
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                )
+            val session =
+                sessionService.getSession(id)
+                    ?: return@get call.respond(HttpStatusCode.NotFound)
             call.respond(HttpStatusCode.OK, session.toResponse())
         }
 
@@ -49,24 +53,23 @@ fun Route.sessionRoute(
         }
 
         delete {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
-                HttpStatusCode.BadRequest
-            )
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             sessionService.deleteSession(id)
             call.respond(HttpStatusCode.NoContent)
         }
     }
 }
 
-
-private fun SessionModel.toResponse(): SessionResponse {
-    return SessionResponse(
+private fun SessionModel.toResponse(): SessionResponse =
+    SessionResponse(
         id = this.id,
         name = this.name,
         description = this.description,
         startDate = this.startDate,
         endDate = this.endDate,
         imageUrl = this.imageUrl,
-        qrLink = this.qrLink
+        qrLink = this.qrLink,
     )
-}

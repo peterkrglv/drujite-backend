@@ -1,15 +1,29 @@
 package routing
 
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.plugins.openapi.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.swagger.codegen.v3.generators.html.StaticHtmlCodegen
-import ru.drujite.routing.*
+import io.ktor.http.ContentType
+import io.ktor.server.application.Application
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.route
+import io.ktor.server.routing.routing
+import ru.drujite.routing.adminAuthRoute
+import ru.drujite.routing.authRoute
+import ru.drujite.routing.charactersClothingRoute
+import ru.drujite.routing.clothingRoute
+import ru.drujite.routing.clothingTypeRoute
+import ru.drujite.routing.imageRoute
+import ru.drujite.routing.superAdminRoute
 import ru.drujite.services.ClothingService
 import ru.drujite.services.ImageService
-import services.*
+import services.CharacterService
+import services.ClanService
+import services.GoalService
+import services.JwtService
+import services.NewsService
+import services.SessionService
+import services.TimeTableService
+import services.UserService
+import services.UsersSessionsService
 
 fun Application.configureRouting(
     userService: UserService,
@@ -22,7 +36,7 @@ fun Application.configureRouting(
     clanService: ClanService,
     newsService: NewsService,
     imageService: ImageService,
-    clothingService: ClothingService
+    clothingService: ClothingService,
 ) {
     val v1 = "/api/v1/"
     routing {
@@ -109,11 +123,11 @@ fun Application.configureRouting(
                     <body>
                         <h1>Welcome to Drujite API</h1>
                         <p>За южное солнце!</p>
-                        <p>${application.environment.config.property("jwt.secret").getString()}</p>
+                        <p>${call.application.environment.config.property("jwt.secret").getString()}</p>
                     </body>
                 </html>
                 """.trimIndent(),
-                ContentType.Text.Html
+                ContentType.Text.Html,
             )
         }
     }

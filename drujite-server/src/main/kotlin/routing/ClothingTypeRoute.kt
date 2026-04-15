@@ -1,19 +1,20 @@
 package ru.drujite.routing
 
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import responses.IdResponse
 import ru.drujite.models.ClothingType
 import ru.drujite.requests.ClothingTypeRequest
 import ru.drujite.responses.ClothingTypeResponse
 import ru.drujite.services.ClothingService
 
-fun Route.clothingTypeRoute(
-    clothingService: ClothingService
-) {
+fun Route.clothingTypeRoute(clothingService: ClothingService) {
     authenticate {
         get("/all") {
             val clothingTypes = clothingService.getClothingTypes()
@@ -27,9 +28,10 @@ fun Route.clothingTypeRoute(
         }
 
         delete {
-            val id = call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
-                HttpStatusCode.BadRequest
-            )
+            val id =
+                call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
+                    HttpStatusCode.BadRequest,
+                )
             val result = clothingService.deleteClothingType(id)
             if (result) {
                 call.respond(HttpStatusCode.NoContent)
@@ -40,14 +42,9 @@ fun Route.clothingTypeRoute(
     }
 }
 
-private fun ClothingTypeRequest.toModel() = ClothingType(
-    id = 0,
-    name = name,
-    isEditable = isEditable
-)
-
-private fun ClothingType.toResponse() = ClothingTypeResponse(
-    id = id,
-    name = name,
-    isEditable = isEditable
-)
+private fun ClothingTypeRequest.toModel() =
+    ClothingType(
+        id = 0,
+        name = name,
+        isEditable = isEditable,
+    )

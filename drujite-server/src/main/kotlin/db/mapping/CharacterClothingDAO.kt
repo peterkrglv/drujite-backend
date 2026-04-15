@@ -10,7 +10,9 @@ object CharacterClothingTable : IntIdTable("character_clothing") {
     val clothingItemId = integer("clothing_item_id").references(ClothingItemTable.id).nullable()
 }
 
-class CharacterClothingDAO(id: EntityID<Int>) : IntEntity(id) {
+class CharacterClothingDAO(
+    id: EntityID<Int>,
+) : IntEntity(id) {
     companion object : IntEntityClass<CharacterClothingDAO>(CharacterClothingTable)
 
     var characterId by CharacterClothingTable.characterId

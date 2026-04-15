@@ -9,13 +9,15 @@ import org.jetbrains.exposed.sql.javatime.timestamp
 
 object NewsTable : IntIdTable("news") {
     val sessionId = integer("session_id").references(SessionTable.id)
-    val title = varchar("title", 255)
+    val title = varchar("title", DbStringLength.STANDARD)
     val content = text("content")
     val time = timestamp("time")
-    val imageUrl = varchar("image_url", 255).nullable()
+    val imageUrl = varchar("image_url", DbStringLength.STANDARD).nullable()
 }
 
-class NewsDAO(id: EntityID<Int>) : IntEntity(id) {
+class NewsDAO(
+    id: EntityID<Int>,
+) : IntEntity(id) {
     companion object : IntEntityClass<NewsDAO>(NewsTable)
 
     var sessionId by NewsTable.sessionId
@@ -25,11 +27,12 @@ class NewsDAO(id: EntityID<Int>) : IntEntity(id) {
     var imageUrl by NewsTable.imageUrl
 }
 
-fun daoToModel(dao: NewsDAO) = NewsModel(
-    id = dao.id.value,
-    sessionId = dao.sessionId,
-    title = dao.title,
-    content = dao.content,
-    dateTime = dao.time.toString(),
-    imageUrl = dao.imageUrl
-)
+fun daoToModel(dao: NewsDAO) =
+    NewsModel(
+        id = dao.id.value,
+        sessionId = dao.sessionId,
+        title = dao.title,
+        content = dao.content,
+        dateTime = dao.time.toString(),
+        imageUrl = dao.imageUrl,
+    )

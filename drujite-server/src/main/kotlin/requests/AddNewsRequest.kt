@@ -3,7 +3,7 @@ package requests
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AddNewsRequest (
+data class AddNewsRequest(
     val sessionId: Int,
     val title: String,
     val content: String,
