@@ -12,6 +12,9 @@ import ru.drujite.services.ClothingService
 
 fun Route.charactersClothingRoute(clothingService: ClothingService) {
     authenticate {
+        /**
+         * Tag: CharactersClothing
+         */
         get {
             val characterId =
                 call.request.queryParameters["id"]?.toIntOrNull()
@@ -20,6 +23,9 @@ fun Route.charactersClothingRoute(clothingService: ClothingService) {
             call.respond(HttpStatusCode.OK, clothingItems)
         }
 
+        /**
+         * Tag: CharactersClothing
+         */
         get("editable") {
             val characterId =
                 call.request.queryParameters["id"]?.toIntOrNull()
@@ -28,6 +34,9 @@ fun Route.charactersClothingRoute(clothingService: ClothingService) {
             call.respond(HttpStatusCode.OK, clothingItems)
         }
 
+        /**
+         * Tag: CharactersClothing
+         */
         post {
             val request = call.receive<AddCharactersClothingRequest>()
             val characterId = request.characterId

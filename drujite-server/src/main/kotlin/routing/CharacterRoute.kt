@@ -18,6 +18,9 @@ import services.CharacterService
 
 fun Route.characterRoute(characterService: CharacterService) {
     authenticate {
+        /**
+         * Tag: Character
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -31,6 +34,9 @@ fun Route.characterRoute(characterService: CharacterService) {
             }
         }
 
+        /**
+         * Tag: Character
+         */
         post {
             val request = call.receive<AddCharacterRequest>()
             val character =
@@ -45,6 +51,9 @@ fun Route.characterRoute(characterService: CharacterService) {
             call.respond(HttpStatusCode.Created, IdResponse(characterId))
         }
 
+        /**
+         * Tag: Character
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -58,6 +67,9 @@ fun Route.characterRoute(characterService: CharacterService) {
             }
         }
 
+        /**
+         * Tag: Character
+         */
         get("/with-clan-and-player") {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -71,6 +83,9 @@ fun Route.characterRoute(characterService: CharacterService) {
             }
         }
 
+        /**
+         * Tag: Character
+         */
         put("story") {
             val request = call.receive<ChangeCharactersStoryRequest>()
             val result = characterService.changeCharactersStory(request.characterId, request.story)

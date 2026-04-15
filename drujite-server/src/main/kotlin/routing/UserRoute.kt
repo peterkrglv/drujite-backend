@@ -19,6 +19,9 @@ fun Route.userRoute(
     jwtService: JwtService,
 ) {
     authenticate {
+        /**
+         * Tag: User
+         */
         get("/me") {
             val principal = call.principal<JWTPrincipal>()
             val userId =

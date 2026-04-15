@@ -1,0 +1,8 @@
+ktor:
+  deployment:
+    port: 0
+jwt:
+  audience: "drujite-audience"
+  issuer: "http://localhost/"
+  realm: "ktor sample app"
+  secret: "test-secret"

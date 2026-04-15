@@ -17,6 +17,9 @@ import services.TimeTableService
 
 fun Route.eventRoute(timeTableService: TimeTableService) {
     authenticate {
+        /**
+         * Tag: Event
+         */
         post {
             val request = call.receive<AddEventRequest>()
             val event = request.toModel()
@@ -30,6 +33,9 @@ fun Route.eventRoute(timeTableService: TimeTableService) {
             }
         }
 
+        /**
+         * Tag: Event
+         */
         delete {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@delete call.respond(
@@ -43,6 +49,9 @@ fun Route.eventRoute(timeTableService: TimeTableService) {
             }
         }
 
+        /**
+         * Tag: Event
+         */
         get {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
@@ -56,6 +65,9 @@ fun Route.eventRoute(timeTableService: TimeTableService) {
             }
         }
 
+        /**
+         * Tag: Event
+         */
         post("/session-date") {
             val request = call.receive<GetTimetableBySessionAndDate>()
             val events = timeTableService.getEventsBySessionAndDate(request.sessionId, request.date)
@@ -66,6 +78,9 @@ fun Route.eventRoute(timeTableService: TimeTableService) {
             }
         }
 
+        /**
+         * Tag: Event
+         */
         get("by-timetable") {
             val id =
                 call.request.queryParameters["id"]?.toIntOrNull() ?: return@get call.respond(
